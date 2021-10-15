@@ -1,0 +1,301 @@
+﻿<Window x:Class="Music.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Music.ViewModel"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True" 
+        ResizeMode="CanResizeWithGrip"
+        Height="670" Width="1075">
+    <Window.Resources>
+
+        <!--右击属性-->
+        <!--<ContextMenu x:Key="MusicMenu">
+            <MenuItem Header="重命名" Click="ReMusicMenuName"/>
+            <MenuItem Header="删除" MouseDown="DeleteMusicMenu"/>
+        </ContextMenu>-->
+        
+        
+        <Style x:Key="Iconfont">
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="TextBlock.FontSize" Value="16"></Setter>
+            <Setter Property="TextBlock.Foreground" Value="#666666"></Setter>
+        </Style>
+        <!--Icont-->
+        <Style x:Key="Iconfont_Front" BasedOn="{StaticResource Iconfont}">
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/#iconfont" />
+        </Style>
+        
+        <!--Icont 后面的Name-->
+        <Style x:Key="Iconfont_Name" BasedOn="{StaticResource Iconfont}">
+            <Setter Property="TextBlock.Margin" Value="10 0 0 0"></Setter>
+            <Setter Property="TextBlock.Width" Value="120"></Setter>
+        </Style>
+        <!--Icont 后面的Dele-->
+        <!--注册一个点击事件-->
+        <!--<Style x:Key="Iconfont_Dele" BasedOn="{StaticResource Iconfont_Front}">
+            
+        </Style>-->
+        <!--鼠标触碰变色-->
+        <Style x:Key="MouseOver" TargetType="StackPanel">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F6F6F7" />
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+            </Style.Triggers>   
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Image">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    
+    <Border BorderThickness="1" BorderBrush="Gray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" ></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="60" ></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Grid Background="#BC2F2E" MouseLeftButtonDown="Grid_MouseLeftButtonDown" >
+                <TextBlock Text="网易云音乐" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" />
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Name="Narrow" Text="—"  FontFamily="/#i1confont" Foreground="White" Padding="10" MouseDown="WindowsMin" />
+                    <TextBlock Name="Enlarge" Text="&#xea98;" FontFamily="/#iconfont" Foreground="White" Margin="10 0 10 0" Padding="10" MouseDown="WindowsMax"/>
+                    <TextBlock Name="Close" Text="&#xe676;" FontFamily="/#iconfont" Foreground="White" Margin="0 0 10 0" Padding="10" MouseDown="WindowsClose"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Background="Yellow" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--旁边的tab-->
+                <Grid Background="#FFFFFF">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="15 10 0 0">
+                        <StackPanel>
+                            <TextBlock Name="Tab" Text="&#xe680;"  FontFamily="/#iconfont" FontSize="20" MouseDown="Tab_MouseDown" Visibility="Visible" ></TextBlock>
+                            <TextBlock Name="Tab1" Text="&#xe681;"  FontFamily="/#iconfont" FontSize="20" MouseDown="Tab_MouseDown" Visibility="Collapsed" ></TextBlock>
+                            <StackPanel Name="Search" Height="30" Orientation="Horizontal"  VerticalAlignment="Center" Margin="0 10 0 0" Style="{StaticResource MouseOver}">
+                                <TextBlock Text="&#xe60a;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                <TextBlock Text="搜索" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                            <StackPanel x:Name="Fond" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0" Style="{StaticResource MouseOver}">
+                                <TextBlock Text="&#xe673;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                <TextBlock Text="发现音乐" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                            <StackPanel x:Name="MV" Style="{StaticResource MouseOver}" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0">
+                                <TextBlock Text="&#xe624;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                <TextBlock Text="MV" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                            <StackPanel x:Name="Friend" Style="{StaticResource MouseOver}" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0">
+                                <TextBlock Text="&#xe678;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                <TextBlock Text="朋友" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Margin="0 40 0 0">
+                                <TextBlock Text="我的音乐" Foreground="#666666"></TextBlock>
+                                <StackPanel x:Name="MyMusic" Style="{StaticResource MouseOver}" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0">
+                                    <TextBlock Text="&#xe61b;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                    <TextBlock Text="本地音乐" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                </StackPanel>
+                                <StackPanel x:Name="Down" Style="{StaticResource MouseOver}" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0">
+                                    <TextBlock Text="&#xe66c;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                    <TextBlock Text="下载管理" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                </StackPanel>
+                                <StackPanel x:Name="LastPaly" Style="{StaticResource MouseOver}" Height="30" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 10 0 0">
+                                    <TextBlock Text="&#xe65f;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                    <TextBlock Text="最近播放" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="CreateMenue"  Margin="0 10 0 0">
+                                
+                                <UniformGrid Columns="2" MouseDown="CreateMenue_Mousedown">
+                                    <TextBlock Text="创建歌单" Foreground="#666666" FontSize="10" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="&#xe664;" FontFamily="/#iconfont"  FontSize="10" HorizontalAlignment="Right" Margin="0 0 15 0"></TextBlock>
+                                </UniformGrid>
+                                
+                                <ScrollViewer Name="scrollViewer1" Height="80" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <ScrollViewer.Content>
+                                        <StackPanel x:Name="AddMusicMenu" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                                            <!--<StackPanel Margin="0 10 0 0" Style="{StaticResource MouseOver}" Height="30"  Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="&#xe7fe;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                                <TextBlock Text="添加的新歌单" Margin="10 0 0 0" Foreground="#666666" VerticalAlignment="Center" FontSize="16" Width="120"></TextBlock>
+                                                <TextBlock Text="&#xe6a6;" FontFamily="/#iconfont" Foreground="#666666" VerticalAlignment="Center"   FontSize="16"></TextBlock>
+                                                <StackPanel.ContextMenu>
+                                                    <ContextMenu Name="contextMenu">
+                                                        <MenuItem Header="复制"/>
+                                                        <MenuItem Header="粘贴"/>
+                                                        <MenuItem Header="剪切"/>
+                                                        <MenuItem Header="删除"/>
+                                                    </ContextMenu>
+                                                </StackPanel.ContextMenu>
+                                            </StackPanel>-->
+
+                                        </StackPanel>
+                                    </ScrollViewer.Content>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Border BorderThickness=" 0 0 0 1" BorderBrush="Gray"></Border>
+                    <Grid Grid.Row="1">
+                        <UniformGrid Columns="2">
+                            <TextBlock x:Name="Login" Text="未登录" Foreground="#666666" FontSize="16" VerticalAlignment="Center" Margin="15 0 0 0"></TextBlock>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock x:Name="Edit" Text="&#xe66a;" FontFamily="/#iconfont" Foreground="#666666" FontSize="18" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock x:Name="SetUp" Text="&#xe67a;" FontFamily="/#iconfont" Foreground="#666666" FontSize="18" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
+                            </StackPanel>
+                        </UniformGrid>
+                    </Grid>
+                </Grid>
+                <!--中间的主体部分-->
+                <Grid Grid.Column="1" Background="#FFFFFF">
+                    <Grid.RowDefinitions>
+                        <!--头-->
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <!--中间部分-->
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!--头-->
+                    <Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0 ">
+                                <Border Background="#DF3B3B" CornerRadius="30" Width="30" Height="30" Margin="10">
+                                    <Border Background="White" CornerRadius="15" Width="15" Height="15"></Border>
+                                </Border>
+                                <TextBlock Text="热门推荐" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="40 0 0 0">
+                                <TextBlock Text="华语" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="|" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="流行" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="|" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="摇滚" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="|" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="民谣" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="|" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                                <TextBlock Text="电子" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0" ></TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <TextBlock Text="更多" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 20 0"></TextBlock>
+                                <TextBlock Text="&#xe61b;" FontFamily="/#iconfont" FontSize="16" Foreground="#B4B4B4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 30 0"></TextBlock>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </Grid>
+                    <!--中间部分-->
+                    <Grid Grid.Row="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="1号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="2号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="3号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="4号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="5号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="6号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="7号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="Resources/LP.jpg" Height="180" Width="150"></Image>
+                            <TextBlock Text="8号" HorizontalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Background="White" >
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="240"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="30" Background="#DEE0E1" Margin="5"></Border>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Border Background="#DF3B3B" CornerRadius="30" Width="30" Height="30">
+                        <TextBlock Text="&#xe666;" FontFamily="/#iconfont" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Border Background="#DF3B3B" CornerRadius="40" Width="40" Height="40" Margin="15 0 15 0">
+                        <TextBlock Text="&#xe624;" FontFamily="/#iconfont" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Border Background="#DF3B3B" CornerRadius="30" Width="30" Height="30">
+                        <TextBlock Text="&#xe667;" FontFamily="/#iconfont" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" ></TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Text="0 0 : 0 0 / 0 0 : 0 0" HorizontalAlignment="Right" Foreground="#666666"></TextBlock>
+                    <Border BorderThickness="2" BorderBrush="#666666" Margin="0 10 0 0"></Border>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 0 0">
+                    <TextBlock Text="&#xe66f;" FontFamily="/#iconfont" Width="50" FontSize="20" Foreground="#666666" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="&#xe663;" FontFamily="/#iconfont" Width="50" FontSize="20" Foreground="#666666" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="&#xe67f;" FontFamily="/#iconfont" Width="50" FontSize="20" Foreground="#666666" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="&#xe682;" FontFamily="/#iconfont" Width="50" FontSize="20" Foreground="#666666" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
