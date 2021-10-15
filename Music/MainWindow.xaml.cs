@@ -35,7 +35,7 @@ namespace Music
 
             // 对控件进行数据绑定
             this.AddMusicMenu.DataContext = _MusicMenuList.MusicMenueList;
-
+            // git 测试
             // 刷新
             Refresh_MusicMenuList();
 
